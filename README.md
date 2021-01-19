@@ -33,43 +33,43 @@
 
     There are several log data types that we can collect in Kubernetes.
 
-    Application Logs
+    ###Application Logs
     First and foremost are the logs from the applications that run on Kubernetes. The data stored in these logs consists of the information that our applications output as they run. Typically, this data is written to stdout inside the container where the application runs.
 
-    Kubernetes Cluster Logs
+    ###Kubernetes Cluster Logs
     Several of the components that form Kubernetes itself generate their own logs:
 
-    Kube-apiserver
-    Kube-scheduler
-    Etcd
-    Kube-proxy
-    Kubelet
+    1. Kube-apiserver
+    2. Kube-scheduler
+    3. Etcd
+    4. Kube-proxy
+    5. Kubelet
     These logs are usually stored in files under the /var/log directory of the server on which the service runs. For most services, that server is the Kubernetes master node. Kubelet, however, runs on worker nodes.
 
-    Kubernetes Events
+    ###Kubernetes Events
     Kubernetes keeps track of what it calls “events,” which can be normal changes to the state of an object in a cluster (such as a container being created or starting) or errors (such as the exhaustion of resources).
 
     Events provide only limited context and visibility. They tell we that something happened, but not much about why it happened.
 
-    Kubernetes Audit Logs
+    ###Kubernetes Audit Logs
     Kubernetes can be configured to log requests to the Kube-apiserver. These include requests made by humans (such as requesting a list of running pods) and Kubernetes resources (such as a container requesting access to storage).
 
     Audit logs record who or what issued the request, what the request was for, and the result. If we need to troubleshoot a problem related to an API request, audit logs provide a great deal of visibility.
 
-    Viewing Application Logs
+    ###Viewing Application Logs
     There are two main ways to interact with application log data. The first is to run a command like
 
-    kubectl logs pod-name
+    **kubectl logs pod-name**
 
     The kubectl method is useful for a quick look at log data. Suppose we want to store logs persistently and analyze them systematically. In that case, better served by using an external logging tool like ELK, Prometheus etc.
 
     There are multiple ways of viewing cluster logs. We can simply log into the server that hosts the log we want to view (as noted above, that’s the Kubernetes master node server in most cases) and open the individual log files directly. 
     The most user-friendly solution is to use an external logging tool like ELK, Prometheus etc.
 
-    Viewing Events
+    ###Viewing Events
     We can view Kubernetes event data through kubectl with a command like
 
-    kubectl get events
+    **kubectl get events**
 
 # 4.Prepare a plan to add alerts and monitoring across all of the mentioned components. 
 
@@ -92,16 +92,17 @@
 
 # 5. Able to come up with a plan which can be scaled to 100K users in a cost optimized way. 
 
-    Scaling options for applications 
+    ##Scaling options for applications 
 
     To handle the load for 100k users we may need to increase or decrease the number of computing resources. As the number of application instances, we need changes, the number of underlying Kubernetes nodes may also need to change. we also might need to quickly provision a large number of additional application instances.
 
-    Horizontal pod autoscaler
+    ###Horizontal pod autoscaler
 
     Kubernetes uses the horizontal pod autoscaler (HPA) to monitor the resource demand and automatically scale the number of replicas. By default, the horizontal pod autoscaler checks the Metrics API every 30 seconds for any required changes in replica count. When changes are required, the number of replicas is increased or decreased accordingly. 
 
     When We configure the horizontal pod autoscaler for a given deployment, we define the minimum and a maximum number of replicas that can run. we also define the metric to monitor and base any scaling decisions on, such as CPU usage.
 
-    Cluster autoscaler
+    ###Cluster autoscaler
+    
     To respond to changing pod demands, Kubernetes has a cluster autoscaler, that adjusts the number of nodes based on the requested compute resources in the node pool. By default, the cluster autoscaler checks the Metrics API server every 10 seconds for any required changes in node count. If the cluster autoscale determines that a change is required, the number of nodes in our K8S cluster is increased or decreased accordingly. 
     Cluster autoscaler is typically used alongside the horizontal pod autoscaler. When combined, the horizontal pod autoscaler increases or decreases the number of pods based on application demand, and the cluster autoscaler adjusts the number of nodes as needed to run those additional pods accordingly.
