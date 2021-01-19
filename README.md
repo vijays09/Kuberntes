@@ -1,19 +1,19 @@
 # 1.Lay down a plan for CI/CD. As there will be tests pertaining to each microservice, how do you plan to run them in tandem in the deployment pipeline. 
         We will set up a CI/CD pipeline using Jenkins for microservices running in Kubernetes on AWS EKS.
         In a typical microservices-based architecture, each microservice can be developed in a different programming language or framework. All the build instructions for a particular microservice stay in Dockerfile placed at the root of each repository.
-                Jenkins pipeline having the following stages.
-                Source
-                Build and Test
-                Artifact
-                Deploy
-                Notify
+        Jenkins pipeline having the following stages.
+        1. Source
+        2. Build and Test
+        3. Artifact
+        4. Deploy
+        5. Notify
 
         Creating a multibranch Pipeline
-            It wil take a clone of the git repository 
-            then there MVN/Gradle build command will and it iwll build the source code and exicute the test cases
-            Once the above step is successthen i will start to build the docker image for our source code and push that image to a specific container registery(docker hub, ecr acr etc.) 
-            then we will run the sonar scaner for our source code to check  the code civerage and if the code coverge it grater then our crateria then i will move to next step else mark the job as failed    
-            now the next step is exiting in that jenkins will deploy the docker image on kuberntes cluster by using deployment files that is present in git repo.
+        1. It wil take a clone of the git repository 
+        2. There MVN/Gradle build command will and it iwll build the source code and exicute the test cases
+        3. Once the above step is successthen i will start to build the docker image for our source code and push that image to a specific container registery(docker hub, ecr acr etc.) 
+        4. Then we will run the sonar scaner for our source code to check  the code civerage and if the code coverge it grater then our crateria then i will move to next step else mark the job as failed    
+        5. Now the next step is exiting in that jenkins will deploy the docker image on kuberntes cluster by using deployment files that is present in git repo.
 
 # 2.Prepare a deployment strategy that can be adapted for Staging, UAT and Production. Note that staging setup needs to be less in terms of operating cost. 
 
