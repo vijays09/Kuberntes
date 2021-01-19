@@ -1,33 +1,33 @@
 # 1.Lay down a plan for CI/CD. As there will be tests pertaining to each microservice, how do you plan to run them in tandem in the deployment pipeline. 
-We will set up a CI/CD pipeline using Jenkins for microservices running in Kubernetes on AWS EKS.
-In a typical microservices-based architecture, each microservice can be developed in a different programming language or framework. All the build instructions for a particular microservice stay in Dockerfile placed at the root of each repository.
-        Jenkins pipeline having the following stages.
-        Source
-        Build and Test
-        Artifact
-        Deploy
-        Notify
+        We will set up a CI/CD pipeline using Jenkins for microservices running in Kubernetes on AWS EKS.
+        In a typical microservices-based architecture, each microservice can be developed in a different programming language or framework. All the build instructions for a particular microservice stay in Dockerfile placed at the root of each repository.
+                Jenkins pipeline having the following stages.
+                Source
+                Build and Test
+                Artifact
+                Deploy
+                Notify
 
-Creating a multibranch Pipeline
-    It wil take a clone of the git repository 
-    then there MVN/Gradle build command will and it iwll build the source code and exicute the test cases
-    Once the above step is successthen i will start to build the docker image for our source code and push that image to a specific container registery(docker hub, ecr acr etc.) 
-    then we will run the sonar scaner for our source code to check  the code civerage and if the code coverge it grater then our crateria then i will move to next step else mark the job as failed    
-    now the next step is exiting in that jenkins will deploy the docker image on kuberntes cluster by using deployment files that is present in git repo.
+        Creating a multibranch Pipeline
+            It wil take a clone of the git repository 
+            then there MVN/Gradle build command will and it iwll build the source code and exicute the test cases
+            Once the above step is successthen i will start to build the docker image for our source code and push that image to a specific container registery(docker hub, ecr acr etc.) 
+            then we will run the sonar scaner for our source code to check  the code civerage and if the code coverge it grater then our crateria then i will move to next step else mark the job as failed    
+            now the next step is exiting in that jenkins will deploy the docker image on kuberntes cluster by using deployment files that is present in git repo.
 
 # 2.Prepare a deployment strategy that can be adapted for Staging, UAT and Production. Note that staging setup needs to be less in terms of operating cost. 
 
-Blue/Green Deployment
-    A Blue/Green deployment is a way of accomplishing a zero-downtime upgrade to an existing application. The “Blue” version is the currently running copy of the application and the “Green” version is the new version. Once the green version is ready, traffic is rerouted to the new version.
-    The user will experience no downtime and will seamlessly switch between blue and green versions of the application.
-    Blue/Green With Kubernetes
-    In Kubernetes, this is slightly different because our blue and green versions are actually a set of containers and the load balancer is built into Kubernetes. It’s possible to do blue/green deployments in lots of ways with Kubernetes. we’ll use deployments and services to get the job done. The same idea will work for replica sets.
-    Flow
-    Start with already deployed containers (Deployment) and service.
-    Deploy new deployment
-    Issue a health check
-    If health check passes, update load balancer and remove old deployment
-    If the health check fails, stop and send alerts
+        Blue/Green Deployment
+            A Blue/Green deployment is a way of accomplishing a zero-downtime upgrade to an existing application. The “Blue” version is the currently running copy of the application and the “Green” version is the new version. Once the green version is ready, traffic is rerouted to the new version.
+            The user will experience no downtime and will seamlessly switch between blue and green versions of the application.
+            Blue/Green With Kubernetes
+            In Kubernetes, this is slightly different because our blue and green versions are actually a set of containers and the load balancer is built into Kubernetes. It’s possible to do blue/green deployments in lots of ways with Kubernetes. we’ll use deployments and services to get the job done. The same idea will work for replica sets.
+            Flow
+            Start with already deployed containers (Deployment) and service.
+            Deploy new deployment
+            Issue a health check
+            If health check passes, update load balancer and remove old deployment
+            If the health check fails, stop and send alerts
 
 # 3. Prepare a plan to see logs in all the above three environments. 
 
